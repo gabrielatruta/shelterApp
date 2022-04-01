@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @RequiredArgsConstructor
@@ -30,7 +31,7 @@ public class Animal {
     private Float age;
 
     @Column(nullable = false)
-    private EGender gender;
+    private String gender;
 
     @Column(nullable = false)
     private ESize size;
@@ -44,8 +45,7 @@ public class Animal {
     @Column(nullable = false)
     private Boolean neutered;
 
-    @ManyToOne
-    @JoinColumn(name = "ong_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Ong ong;
 
     @Column(nullable = false)
@@ -54,4 +54,20 @@ public class Animal {
     @Column(nullable = false)
     private String description;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Animal animal = (Animal) o;
+        return Objects.equals(id, animal.id) && species == animal.species
+                && Objects.equals(name, animal.name) && Objects.equals(age, animal.age)
+                && Objects.equals(gender, animal.gender) && size == animal.size
+                && Objects.equals(neutered, animal.neutered) && Objects.equals(ong, animal.ong)
+                && Objects.equals(picture, animal.picture) && Objects.equals(description, animal.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.shelterapp.animal;
+package com.example.shelterapp.animal.repository;
 
 import com.example.shelterapp.animal.model.Species;
 import org.springframework.data.jpa.repository.JpaRepository;

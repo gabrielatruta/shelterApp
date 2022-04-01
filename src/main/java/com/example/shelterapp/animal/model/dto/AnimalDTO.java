@@ -1,6 +1,5 @@
 package com.example.shelterapp.animal.model.dto;
 
-import com.example.shelterapp.animal.model.enums.EGender;
 import com.example.shelterapp.animal.model.enums.ESize;
 import lombok.AllArgsConstructor;
 import lombok.Data;

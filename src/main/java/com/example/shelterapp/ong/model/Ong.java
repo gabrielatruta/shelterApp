@@ -1,11 +1,15 @@
 package com.example.shelterapp.ong.model;
 
+import com.example.shelterapp.animal.model.Animal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @RequiredArgsConstructor
@@ -32,5 +36,23 @@ public class Ong {
 
     @Column(nullable = false)
     private String website;
+
+    @OneToMany(
+            mappedBy = "ong",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Collection<Animal> animals = new ArrayList<>();
+
+    public void addAnimal (Animal animal) {
+        animals.add(animal);
+        animal.setOng(this);
+
+    }
+
+    public void removeAnimal (Animal animal) {
+        animals.remove(animal);
+        animal.setOng(null);
+    }
 
 }

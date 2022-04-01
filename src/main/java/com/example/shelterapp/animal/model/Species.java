@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Builder
 @Data
 public class Species {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -21,4 +22,5 @@ public class Species {
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private ESpecies name;
+
 }

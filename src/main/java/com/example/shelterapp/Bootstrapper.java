@@ -1,15 +1,15 @@
 package com.example.shelterapp;
 
-import com.example.shelterapp.animal.AnimalRepository;
-import com.example.shelterapp.animal.SpeciesRepository;
-import com.example.shelterapp.animal.model.Animal;
-import com.example.shelterapp.animal.model.Species;
+import com.example.shelterapp.animal.model.*;
+import com.example.shelterapp.animal.model.enums.EColor;
+import com.example.shelterapp.animal.model.enums.ESize;
+import com.example.shelterapp.animal.repository.*;
+import com.example.shelterapp.animal.model.enums.ECharacteristics;
 import com.example.shelterapp.animal.model.enums.ESpecies;
 import com.example.shelterapp.ong.OngRepository;
 import com.example.shelterapp.ong.model.Ong;
 import com.example.shelterapp.user.model.ERole;
 import com.example.shelterapp.user.model.Role;
-import com.example.shelterapp.user.model.User;
 import com.example.shelterapp.user.repository.RoleRepository;
 import com.example.shelterapp.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,27 +18,27 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
 import java.util.Set;
 
-import static com.example.shelterapp.animal.model.enums.EGender.FEMALE;
-import static com.example.shelterapp.animal.model.enums.EGender.MALE;
 import static com.example.shelterapp.animal.model.enums.ESize.MEDIUM;
 import static com.example.shelterapp.animal.model.enums.ESize.SMALL;
 import static com.example.shelterapp.animal.model.enums.ESpecies.CAT;
 import static com.example.shelterapp.animal.model.enums.ESpecies.DOG;
-import static com.example.shelterapp.user.model.ERole.ADMINISTRATOR;
 import static java.lang.Boolean.TRUE;
 
 @Component
 @RequiredArgsConstructor
 public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> {
 
-
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
     private final AnimalRepository animalRepository;
     private final OngRepository ongRepository;
     private final SpeciesRepository speciesRepository;
+    private final CharacteristicsRepository characteristicsRepository;
+    private final ColorRepository colorRepository;
+    private final SizeRepository sizeRepository;
 
     @Value("${app.bootstrap}")
     private Boolean bootstrap;
@@ -64,19 +64,51 @@ public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> 
                                 .build()
                 );
             }
-            Role adminRole = Role.builder()
-                    .name(ADMINISTRATOR)
-                    .build();
+            for (ECharacteristics value : ECharacteristics.values()) {
+                characteristicsRepository.save(
+                        Characteristics.builder()
+                                .characteristics(value)
+                                .build()
+                );
+            }
+            for (EColor value : EColor.values()) {
+                colorRepository.save(
+                        Color.builder()
+                                .color(value)
+                                .build()
+                );
+            }
+            for (ESize value : ESize.values()) {
+                sizeRepository.save(
+                        Size.builder()
+                                .size(value)
+                                .build()
+                );
+            }
 
-            User admin = User.builder()
-                    .email("admin@email.com")
-                    .username("admin")
-                    .password("Administrator3!")
-                    .roles(Set.of(adminRole))
+//            if (roleRepository.findByName(ADMINISTRATOR).isPresent()) {
+//                User admin = User.builder()
+//                        .email("admin@email.com")
+//                        .username("admin")
+//                        .password("Administrator3!")
+//                        .roles(Set.of(roleRepository.findByName(ADMINISTRATOR).get()))
+//                        .build();
+//                userRepository.save(admin);
+//            }
+            Animal iris = Animal.builder()
+                    .species(DOG)
+                    .name("Iris")
+                    .age(7F)
+                    .gender("female")
+                    .size(MEDIUM)
+                    .neutered(TRUE)
+                    .picture("test")
+                    .description("German shepard mixture, very smart")
                     .build();
-            userRepository.save(admin);
+            animalRepository.save(iris);
 
             Ong randomONG = Ong.builder()
+                    .id(-1L)
                     .name("Test ONG")
                     .description("test")
                     .city("Zalau")
@@ -84,30 +116,22 @@ public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> 
                     .website("test")
                     .build();
 
-            Animal Iris = Animal.builder()
-                    .species(DOG)
-                    .name("Iris")
-                    .age(7F)
-                    .gender(FEMALE)
-                    .size(MEDIUM)
-                    .neutered(TRUE)
-                    .ong(randomONG)
-                    .picture("test")
-                    .description("German shepard mixture, very smart")
-                    .build();
-            animalRepository.save(Iris);
+            randomONG.addAnimal(iris);
+            animalRepository.save(iris);
+            ongRepository.save(randomONG);
 
-            animalRepository.save(Animal.builder()
-                    .species(CAT)
-                    .name("Fonfi")
-                    .age(12F)
-                    .gender(MALE)
-                    .size(SMALL)
-                    .neutered(TRUE)
-                    .ong(randomONG)
-                    .picture("test")
-                    .description("Friendly cat, chubby, gets along well with any cat that doesn't start a fight")
-                    .build());
+
+//            animalRepository.save(Animal.builder()
+//                    .species(CAT)
+//                    .name("Fonfi")
+//                    .age(12F)
+//                    .gender("male")
+//                    .size(SMALL)
+//                    .neutered(TRUE)
+//                    .ong(randomONG)
+//                    .picture("test")
+//                    .description("Friendly cat, chubby, gets along well with any cat that doesn't start a fight")
+//                    .build());
 
 
         }

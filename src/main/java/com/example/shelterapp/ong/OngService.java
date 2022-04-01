@@ -1,17 +1,13 @@
 package com.example.shelterapp.ong;
 
-import com.example.shelterapp.animal.AnimalRepository;
-import com.example.shelterapp.animal.model.Animal;
+import com.example.shelterapp.animal.repository.AnimalRepository;
 import com.example.shelterapp.ong.model.Ong;
 import com.example.shelterapp.ong.model.dto.OngDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service

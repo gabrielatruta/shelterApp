@@ -27,7 +27,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
+    //private final PasswordEncoder passwordEncoder;
 
 
     public List<UserListDTO> allUsersForList() {
@@ -53,8 +53,9 @@ public class UserService {
         Set<Role> roles = new HashSet<>();
         roles.add(defaultRole);
         user1.setRoles(roles);
-        user1.setPassword(passwordEncoder.encode(user.getPassword()));
-        
+        //user1.setPassword(passwordEncoder.encode(user.getPassword()));
+        user1.setPassword(user.getPassword());
+
         return userMapper.toDTO(userRepository.save(user1));
     }
 
@@ -63,7 +64,8 @@ public class UserService {
         User actUser = findById(id);
         actUser.setEmail(user.getEmail());
         actUser.setUsername(user.getUsername());
-        actUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        //actUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        actUser.setPassword(user.getPassword());
 
         return userMapper.toDTO(
                 userRepository.save(actUser)
