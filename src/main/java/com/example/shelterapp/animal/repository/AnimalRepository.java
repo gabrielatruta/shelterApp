@@ -15,4 +15,10 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
 
     @Query("SELECT a FROM Animal a WHERE a.age < ?1")
     Collection<Animal> findAllAnimalsBelowAge(Float age);
+
+    /*
+    like, contains, notequal
+    birthday for animal
+    last vaccine, period for valid vax, what animals need new vaccines
+     */
 }

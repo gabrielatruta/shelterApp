@@ -1,10 +1,12 @@
 package com.example.shelterapp.animal.model.dto;
 
-import com.example.shelterapp.animal.model.enums.ESize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @SuperBuilder
@@ -16,11 +18,13 @@ public class AnimalDTO {
     private String species;
     private String name;
     private Float age;
+    private String birthday;
     private String gender;
-    private ESize size;
-//    private Set<String> colorList = new HashSet<>();
-//    private Set<String> characteristics = new HashSet<>();
+    private String size;
+    private List<String> colorList = new ArrayList<>();
+    private List<String> characteristics = new ArrayList<>();
     private Boolean neutered;
+    private String dateOfLastVaccine;
     private String picture;
     private String description;
 

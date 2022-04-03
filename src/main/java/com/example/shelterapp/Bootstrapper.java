@@ -1,11 +1,11 @@
 package com.example.shelterapp;
 
 import com.example.shelterapp.animal.model.*;
+import com.example.shelterapp.animal.model.enums.ECharacteristics;
 import com.example.shelterapp.animal.model.enums.EColor;
 import com.example.shelterapp.animal.model.enums.ESize;
-import com.example.shelterapp.animal.repository.*;
-import com.example.shelterapp.animal.model.enums.ECharacteristics;
 import com.example.shelterapp.animal.model.enums.ESpecies;
+import com.example.shelterapp.animal.repository.*;
 import com.example.shelterapp.ong.OngRepository;
 import com.example.shelterapp.ong.model.Ong;
 import com.example.shelterapp.user.model.ERole;
@@ -18,12 +18,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import java.util.Set;
-
 import static com.example.shelterapp.animal.model.enums.ESize.MEDIUM;
-import static com.example.shelterapp.animal.model.enums.ESize.SMALL;
-import static com.example.shelterapp.animal.model.enums.ESpecies.CAT;
 import static com.example.shelterapp.animal.model.enums.ESpecies.DOG;
 import static java.lang.Boolean.TRUE;
 
@@ -50,6 +45,8 @@ public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> 
             userRepository.deleteAll();
             roleRepository.deleteAll();
             ongRepository.deleteAll();
+            //TODO: saveAll
+
             for (ERole value : ERole.values()) {
                 roleRepository.save(
                         Role.builder()
@@ -108,7 +105,6 @@ public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> 
             animalRepository.save(iris);
 
             Ong randomONG = Ong.builder()
-                    .id(-1L)
                     .name("Test ONG")
                     .description("test")
                     .city("Zalau")
@@ -133,6 +129,9 @@ public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> 
 //                    .description("Friendly cat, chubby, gets along well with any cat that doesn't start a fight")
 //                    .build());
 
+            /*
+            REST assured pt teste
+             */
 
         }
     }

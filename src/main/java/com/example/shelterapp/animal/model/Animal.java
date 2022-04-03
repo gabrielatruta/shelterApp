@@ -8,7 +8,8 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.util.*;
 
 @Entity
 @RequiredArgsConstructor
@@ -31,19 +32,30 @@ public class Animal {
     private Float age;
 
     @Column(nullable = false)
+    private LocalDate birthday;
+
+    @Column(nullable = false)
     private String gender;
 
     @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private ESize size;
 
-//    @Column(nullable = false)
-//    private Set<EColor> colorList = new HashSet<>();
-//
-//    @Column(nullable = false)
-//    private Set<ECharacteristics> characteristics = new HashSet<>();
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "animal")
+    private List<Color> colorList = new ArrayList<>();
+
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "animal")
+    private List<Characteristics> characteristics = new ArrayList<>();
 
     @Column(nullable = false)
     private Boolean neutered;
+
+    @Column(nullable = false)
+    private LocalDate dateOfLastVaccine;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Ong ong;

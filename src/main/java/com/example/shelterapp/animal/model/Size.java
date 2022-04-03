@@ -22,4 +22,8 @@ public class Size {
     @Column(nullable = false)
     private ESize size;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "animal_id")
+    private Animal animal;
+
 }

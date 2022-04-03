@@ -42,12 +42,12 @@ public class Ong {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private Collection<Animal> animals = new ArrayList<>();
+    @Builder.Default
+    private List<Animal> animals = new ArrayList<>();
 
     public void addAnimal (Animal animal) {
         animals.add(animal);
         animal.setOng(this);
-
     }
 
     public void removeAnimal (Animal animal) {

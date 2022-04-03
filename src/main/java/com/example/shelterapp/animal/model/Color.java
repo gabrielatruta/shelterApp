@@ -22,4 +22,8 @@ public class Color {
     @Column(nullable = false)
     private EColor color;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "animal_id")
+    private Animal animal;
+
 }

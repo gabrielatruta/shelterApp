@@ -11,9 +11,6 @@ public class URLMapping {
     public static final String SIGN_UP = "/sign-up";
 
     public static final String USER = API_PATH + "/users";
-    public static final String OWNER = API_PATH + "/owners";
-    public static final String ANIMAL = API_PATH + "/animals";
-    public static final String EMAIL = API_PATH + "/email";
-    public static final String SMS = API_PATH + "/sms";
+
 
 }

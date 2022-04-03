@@ -23,4 +23,7 @@ public class Species {
     @Column(length = 20)
     private ESpecies name;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "animal_id")
+    private Animal animal;
 }

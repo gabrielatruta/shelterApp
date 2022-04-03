@@ -39,8 +39,12 @@ public class UserController {
     }
 
     @GetMapping(ENTITY)
-    public UserDTO getUser(@PathVariable Long id) {
+    public UserDTO getUser(@PathVariable  Long id) {
         return userService.get(id);
     }
+
+    /*
+    queryParam in loc de pathVariable
+     */
 
 }

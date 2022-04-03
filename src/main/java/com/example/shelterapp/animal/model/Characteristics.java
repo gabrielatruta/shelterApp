@@ -22,4 +22,8 @@ public class Characteristics {
     @Column(nullable = false)
     private ECharacteristics characteristics;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "animal_id")
+    private Animal animal;
+
 }
