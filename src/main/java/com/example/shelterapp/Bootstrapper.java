@@ -18,6 +18,8 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 import static com.example.shelterapp.animal.model.enums.ESize.MEDIUM;
 import static com.example.shelterapp.animal.model.enums.ESpecies.DOG;
 import static java.lang.Boolean.TRUE;
@@ -96,13 +98,14 @@ public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> 
                     .species(DOG)
                     .name("Iris")
                     .age(7F)
+                    .birthday(LocalDate.now())
                     .gender("female")
                     .size(MEDIUM)
                     .neutered(TRUE)
+                    .dateOfLastVaccine(LocalDate.now())
                     .picture("test")
                     .description("German shepard mixture, very smart")
                     .build();
-            animalRepository.save(iris);
 
             Ong randomONG = Ong.builder()
                     .name("Test ONG")
@@ -111,10 +114,10 @@ public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> 
                     .phoneNumber("test")
                     .website("test")
                     .build();
-
             randomONG.addAnimal(iris);
-            animalRepository.save(iris);
             ongRepository.save(randomONG);
+//            iris.setOng(randomONG);
+//            animalRepository.save(iris);
 
 
 //            animalRepository.save(Animal.builder()

@@ -25,6 +25,7 @@ public class AnimalDTO {
     private List<String> characteristics = new ArrayList<>();
     private Boolean neutered;
     private String dateOfLastVaccine;
+    private String ong;
     private String picture;
     private String description;
 

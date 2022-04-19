@@ -25,5 +25,4 @@ public enum ESize {
         }
         throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
-
 }

@@ -1,21 +1,21 @@
 package com.example.shelterapp.ong.model;
 
 import com.example.shelterapp.animal.model.Animal;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
+@Getter
+@Setter
+@ToString
 public class Ong {
 
     @Id
@@ -38,11 +38,12 @@ public class Ong {
     private String website;
 
     @OneToMany(
-            mappedBy = "ong",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     @Builder.Default
+    @JoinColumn(name = "ong_id")
+    @ToString.Exclude
     private List<Animal> animals = new ArrayList<>();
 
     public void addAnimal (Animal animal) {
@@ -53,6 +54,19 @@ public class Ong {
     public void removeAnimal (Animal animal) {
         animals.remove(animal);
         animal.setOng(null);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Ong ong = (Ong) o;
+        return id != null && Objects.equals(id, ong.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 
 }

@@ -1,21 +1,24 @@
 package com.example.shelterapp.animal.model;
 
+import com.example.shelterapp.animal.model.enums.ESize;
+import com.example.shelterapp.animal.model.enums.ESpecies;
 import com.example.shelterapp.ong.model.Ong;
-import com.example.shelterapp.animal.model.enums.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
+@Getter
+@Setter
+@ToString
 public class Animal {
 
     @Id
@@ -44,11 +47,13 @@ public class Animal {
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "animal")
+    @ToString.Exclude
     private List<Color> colorList = new ArrayList<>();
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "animal")
+    @ToString.Exclude
     private List<Characteristics> characteristics = new ArrayList<>();
 
     @Column(nullable = false)
@@ -58,6 +63,7 @@ public class Animal {
     private LocalDate dateOfLastVaccine;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Ong ong;
 
     @Column(nullable = false)
@@ -81,5 +87,9 @@ public class Animal {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    public void addToOng (Ong ong) {
+        this.ong = ong;
     }
 }
