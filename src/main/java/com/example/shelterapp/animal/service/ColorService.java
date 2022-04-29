@@ -17,11 +17,10 @@ import java.util.stream.Collectors;
 public class ColorService {
 
     private final ColorRepository colorRepository;
-    private final ColorMapper colorMapper;
 
     public List<ColorDTO> allColors() {
         return colorRepository.findAll().stream()
-                .map(colorMapper::toDTO)
+                .map(ColorMapper.INSTANCE::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -31,12 +30,12 @@ public class ColorService {
     }
 
     public ColorDTO createColor(ColorDTO colorDTO) {
-        Color newColor = colorMapper.fromDTO(colorDTO);
+        Color newColor = ColorMapper.INSTANCE.fromDTO(colorDTO);
         List<String> allColors = colorRepository.findAll().stream()
                 .map(x -> x.getColor().getName())
                 .collect(Collectors.toList());
         if (!allColors.contains(colorDTO.getColor()))
-            return colorMapper.toDTO(colorRepository.save(newColor));
+            return ColorMapper.INSTANCE.toDTO(colorRepository.save(newColor));
         else
             try {
                 throw new InstanceAlreadyExistsException(colorDTO.getColor() + " color already exists!");
@@ -55,6 +54,6 @@ public class ColorService {
     }
 
     public ColorDTO getColor(Long id) {
-        return colorMapper.toDTO(findById(id));
+        return ColorMapper.INSTANCE.toDTO(findById(id));
     }
 }

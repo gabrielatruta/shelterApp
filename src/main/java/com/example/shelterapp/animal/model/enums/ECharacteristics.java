@@ -1,10 +1,11 @@
 package com.example.shelterapp.animal.model.enums;
 
 public enum ECharacteristics {
-    DOTTED("dotted"),
-    STRIPED("striped"),
-    MULTICOLOURED("multicoloured"),
-    HAIRLESS("hairless");
+
+    DOTTED("DOTTED"),
+    STRIPED("STRIPED"),
+    MULTICOLOURED("MULTICOLOURED"),
+    HAIRLESS("HAIRLESS");
 
     private final String name;
 

@@ -25,7 +25,6 @@ import static java.util.stream.Collectors.toList;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
     private final RoleRepository roleRepository;
     //private final PasswordEncoder passwordEncoder;
 
@@ -36,7 +35,7 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("There is no admin user at the moment!"));
         allUsers.remove(admin);
         return allUsers
-                .stream().map(userMapper::userListDtoFromUser)
+                .stream().map(UserMapper.INSTANCE::userListDtoFromUser)
                 .collect(toList());
     }
 
@@ -49,14 +48,14 @@ public class UserService {
     public UserDTO create(UserDTO user) {
         Role defaultRole = roleRepository.findByName(USER)
                 .orElseThrow(() -> new EntityNotFoundException("Cannot find USER role"));
-        User user1 = userMapper.fromDTO(user);
+        User user1 = UserMapper.INSTANCE.fromDTO(user);
         Set<Role> roles = new HashSet<>();
         roles.add(defaultRole);
         user1.setRoles(roles);
         //user1.setPassword(passwordEncoder.encode(user.getPassword()));
         user1.setPassword(user.getPassword());
 
-        return userMapper.toDTO(userRepository.save(user1));
+        return UserMapper.INSTANCE.toDTO(userRepository.save(user1));
     }
 
     @Email
@@ -67,7 +66,7 @@ public class UserService {
         //actUser.setPassword(passwordEncoder.encode(user.getPassword()));
         actUser.setPassword(user.getPassword());
 
-        return userMapper.toDTO(
+        return UserMapper.INSTANCE.toDTO(
                 userRepository.save(actUser)
         );
 
@@ -80,7 +79,7 @@ public class UserService {
     public void deleteAll() { userRepository.deleteAll(); }
 
     public UserDTO get(Long id) {
-        return userMapper.toDTO(findById(id));
+        return UserMapper.INSTANCE.toDTO(findById(id));
     }
 
 }

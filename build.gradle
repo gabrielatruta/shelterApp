@@ -53,7 +53,8 @@ dependencies {
     implementation 'org.mapstruct:mapstruct:1.4.2.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 
-    testImplementation group: 'uk.co.jemos.podam', name: 'podam', version: '7.2.7.RELEASE'
+    // https://mvnrepository.com/artifact/uk.co.jemos.podam/podam
+    implementation group: 'uk.co.jemos.podam', name: 'podam', version: '7.2.8.RELEASE'
 
 }
 

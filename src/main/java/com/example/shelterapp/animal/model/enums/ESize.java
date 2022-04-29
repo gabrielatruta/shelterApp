@@ -2,10 +2,10 @@ package com.example.shelterapp.animal.model.enums;
 
 public enum ESize {
 
-    SMALL("small"),
-    MEDIUM("medium"),
-    BIG("big"),
-    LARGE("large");
+    SMALL("SMALL"),
+    MEDIUM("MEDIUM"),
+    BIG("BIG"),
+    LARGE("LARGE");
 
     private final String name;
 

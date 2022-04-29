@@ -1,13 +1,14 @@
 package com.example.shelterapp.animal.model.enums;
 
 public enum EColor {
-    BLACK("black"),
-    WHITE("white"),
-    GREY("grey"),
-    BROWN("brown"),
-    YELLOW("yellow"),
-    RED("red"),
-    ORANGE("orange");
+
+    BLACK("BLACK"),
+    WHITE("WHITE"),
+    GREY("GREY"),
+    BROWN("BROWN"),
+    YELLOW("YELLOW"),
+    RED("RED"),
+    ORANGE("ORANGE");
 
     private final String name;
 

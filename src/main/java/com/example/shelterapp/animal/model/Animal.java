@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Entity
 @RequiredArgsConstructor
@@ -48,12 +47,14 @@ public class Animal {
     @Enumerated(value = EnumType.STRING)
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "animal")
     @ToString.Exclude
+    @Builder.Default
     private List<Color> colorList = new ArrayList<>();
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "animal")
     @ToString.Exclude
+    @Builder.Default
     private List<Characteristics> characteristics = new ArrayList<>();
 
     @Column(nullable = false)

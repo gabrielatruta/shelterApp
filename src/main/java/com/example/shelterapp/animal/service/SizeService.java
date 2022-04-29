@@ -17,11 +17,10 @@ import java.util.stream.Collectors;
 public class SizeService {
 
     private final SizeRepository sizeRepository;
-    private final SizeMapper sizeMapper;
 
     public List<SizeDTO> allSizes() {
         return sizeRepository.findAll().stream()
-                .map(sizeMapper::toDTO)
+                .map(SizeMapper.INSTANCE::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -31,12 +30,12 @@ public class SizeService {
     }
 
     public SizeDTO createSize(SizeDTO sizeDTO) {
-        Size newSize = sizeMapper.fromDTO(sizeDTO);
+        Size newSize = SizeMapper.INSTANCE.fromDTO(sizeDTO);
         List<String> allSizes = sizeRepository.findAll().stream()
                 .map(x -> x.getSize().getName())
                 .collect(Collectors.toList());
         if (!allSizes.contains(sizeDTO.getSize()))
-            return sizeMapper.toDTO(sizeRepository.save(newSize));
+            return SizeMapper.INSTANCE.toDTO(sizeRepository.save(newSize));
         else
             try {
                 throw new InstanceAlreadyExistsException(sizeDTO.getSize() + " size already exists!");
@@ -55,6 +54,6 @@ public class SizeService {
     }
 
     public SizeDTO getSize(Long id) {
-        return sizeMapper.toDTO(findById(id));
+        return SizeMapper.INSTANCE.toDTO(findById(id));
     }
 }

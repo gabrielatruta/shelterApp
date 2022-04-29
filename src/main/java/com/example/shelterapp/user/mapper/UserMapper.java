@@ -5,6 +5,7 @@ import com.example.shelterapp.user.model.dto.UserDTO;
 import com.example.shelterapp.user.model.dto.UserListDTO;
 import com.example.shelterapp.user.model.dto.UserMinimalDTO;
 import org.mapstruct.*;
+import org.mapstruct.factory.Mappers;
 
 import java.util.stream.Collectors;
 
@@ -31,4 +32,6 @@ public interface UserMapper {
     default void populateRoles(User user, @MappingTarget UserListDTO userListDTO) {
         userListDTO.setRoles(user.getRoles().stream().map(role -> role.getName().name()).collect(Collectors.toSet()));
     }
+
+    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 }

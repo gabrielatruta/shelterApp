@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.example.shelterapp.URLMapping.COLOR;
-import static com.example.shelterapp.URLMapping.ENTITY;
+import static com.example.shelterapp.utils.URLMapping.COLOR;
+import static com.example.shelterapp.utils.URLMapping.ENTITY;
 
 @RestController
 @RequestMapping(COLOR)

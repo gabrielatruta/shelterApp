@@ -1,4 +1,4 @@
-package com.example.shelterapp;
+package com.example.shelterapp.utils;
 
 public class URLMapping {
 

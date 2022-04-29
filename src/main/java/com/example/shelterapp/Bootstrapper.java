@@ -19,6 +19,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import static com.example.shelterapp.animal.model.enums.ESize.MEDIUM;
 import static com.example.shelterapp.animal.model.enums.ESpecies.DOG;
@@ -37,63 +39,55 @@ public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> 
     private final ColorRepository colorRepository;
     private final SizeRepository sizeRepository;
 
+    //private final PodamFactory podamFactory = new PodamFactoryImpl();
+
     @Value("${app.bootstrap}")
     private Boolean bootstrap;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        if(bootstrap) {
+        if (bootstrap) {
             animalRepository.deleteAll();
             userRepository.deleteAll();
             roleRepository.deleteAll();
             ongRepository.deleteAll();
-            //TODO: saveAll
 
-            for (ERole value : ERole.values()) {
-                roleRepository.save(
-                        Role.builder()
-                                .name(value)
-                                .build()
-                );
-            }
-            for (ESpecies value : ESpecies.values()) {
-                speciesRepository.save(
-                        Species.builder()
-                                .name(value)
-                                .build()
-                );
-            }
-            for (ECharacteristics value : ECharacteristics.values()) {
-                characteristicsRepository.save(
-                        Characteristics.builder()
-                                .characteristics(value)
-                                .build()
-                );
-            }
-            for (EColor value : EColor.values()) {
-                colorRepository.save(
-                        Color.builder()
-                                .color(value)
-                                .build()
-                );
-            }
-            for (ESize value : ESize.values()) {
-                sizeRepository.save(
-                        Size.builder()
-                                .size(value)
-                                .build()
-                );
-            }
+            roleRepository.saveAll(Arrays.stream(ERole.values())
+                    .map(x -> Role.builder()
+                            .name(ERole.fromValue(x.getName()))
+                            .build())
+                    .collect(Collectors.toList()));
 
-//            if (roleRepository.findByName(ADMINISTRATOR).isPresent()) {
-//                User admin = User.builder()
-//                        .email("admin@email.com")
-//                        .username("admin")
-//                        .password("Administrator3!")
-//                        .roles(Set.of(roleRepository.findByName(ADMINISTRATOR).get()))
-//                        .build();
-//                userRepository.save(admin);
+            speciesRepository.saveAll(Arrays.stream(ESpecies.values())
+                    .map(x -> Species.builder()
+                            .name(ESpecies.fromValue(x.getName()))
+                            .build())
+                    .collect(Collectors.toList()));
+
+            characteristicsRepository.saveAll(Arrays.stream(ECharacteristics.values())
+                    .map(x -> Characteristics.builder()
+                            .characteristics(ECharacteristics.fromValue(x.getName()))
+                            .build())
+                    .collect(Collectors.toList()));
+
+            colorRepository.saveAll(Arrays.stream(EColor.values())
+                    .map(x -> Color.builder()
+                            .color(EColor.fromValue(x.getName()))
+                            .build())
+                    .collect(Collectors.toList()));
+
+            sizeRepository.saveAll(Arrays.stream(ESize.values())
+                    .map(x -> Size.builder()
+                            .size(ESize.fromValue(x.getName()))
+                            .build())
+                    .collect(Collectors.toList()));
+
+//            for (int i = 0; i < 100; i++) {
+//                Animal animal = podamFactory.manufacturePojo(Animal.class);
+//                animalRepository.save(animal);
 //            }
+
+
             Animal iris = Animal.builder()
                     .species(DOG)
                     .name("Iris")
@@ -118,19 +112,6 @@ public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> 
             ongRepository.save(randomONG);
 //            iris.setOng(randomONG);
 //            animalRepository.save(iris);
-
-
-//            animalRepository.save(Animal.builder()
-//                    .species(CAT)
-//                    .name("Fonfi")
-//                    .age(12F)
-//                    .gender("male")
-//                    .size(SMALL)
-//                    .neutered(TRUE)
-//                    .ong(randomONG)
-//                    .picture("test")
-//                    .description("Friendly cat, chubby, gets along well with any cat that doesn't start a fight")
-//                    .build());
 
             /*
             REST assured pt teste

@@ -1,8 +1,9 @@
 package com.example.shelterapp.animal.model.enums;
 
 public enum ESpecies {
-    DOG("dog"),
-    CAT("cat");
+
+    DOG("DOG"),
+    CAT("CAT");
 
     private final String name;
 

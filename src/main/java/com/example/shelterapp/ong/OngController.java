@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.example.shelterapp.URLMapping.ENTITY;
-import static com.example.shelterapp.URLMapping.ONG;
+import static com.example.shelterapp.utils.URLMapping.ENTITY;
+import static com.example.shelterapp.utils.URLMapping.ONG;
 
 @RestController
 @RequestMapping(ONG)
