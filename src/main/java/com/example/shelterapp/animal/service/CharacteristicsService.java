@@ -17,11 +17,10 @@ import java.util.stream.Collectors;
 public class CharacteristicsService {
 
     private final CharacteristicsRepository characteristicsRepository;
-    private final CharacteristicsMapper characteristicsMapper;
 
     public List<CharacteristicsDTO> allCharacteristics() {
         return characteristicsRepository.findAll().stream()
-                .map(characteristicsMapper::toDTO)
+                .map(CharacteristicsMapper.INSTANCE::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -31,12 +30,12 @@ public class CharacteristicsService {
     }
 
     public CharacteristicsDTO createCharacteristics(CharacteristicsDTO characteristicsDTO) {
-        Characteristics characteristics = characteristicsMapper.fromDTO(characteristicsDTO);
+        Characteristics characteristics = CharacteristicsMapper.INSTANCE.fromDTO(characteristicsDTO);
         List<String> allCharacteristics = characteristicsRepository.findAll().stream()
                 .map(x -> x.getCharacteristics().getName())
                 .collect(Collectors.toList());
         if (!allCharacteristics.contains(characteristicsDTO.getCharacteristics()))
-            return characteristicsMapper.toDTO(characteristicsRepository.save(characteristics));
+            return CharacteristicsMapper.INSTANCE.toDTO(characteristicsRepository.save(characteristics));
         else
             try {
                 throw new InstanceAlreadyExistsException(
@@ -56,7 +55,7 @@ public class CharacteristicsService {
     }
 
     public CharacteristicsDTO getCharacteristics(Long id) {
-        return characteristicsMapper.toDTO(findById(id));
+        return CharacteristicsMapper.INSTANCE.toDTO(findById(id));
     }
 
 }

@@ -17,11 +17,10 @@ import java.util.stream.Collectors;
 public class SpeciesService {
 
     private final SpeciesRepository speciesRepository;
-    private final SpeciesMapper speciesMapper;
 
     public List<SpeciesDTO> allSpecies() {
         return speciesRepository.findAll().stream()
-                .map(speciesMapper::toDTO)
+                .map(SpeciesMapper.INSTANCE::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -31,12 +30,12 @@ public class SpeciesService {
     }
 
     public SpeciesDTO createSpecies(SpeciesDTO speciesDTO) {
-        Species newSpecies = speciesMapper.fromDTO(speciesDTO);
+        Species newSpecies = SpeciesMapper.INSTANCE.fromDTO(speciesDTO);
         List<String> allSpecies = speciesRepository.findAll().stream()
                 .map(x -> x.getName().getName())
                 .collect(Collectors.toList());
         if (!allSpecies.contains(speciesDTO.getSpecies()))
-            return speciesMapper.toDTO(speciesRepository.save(newSpecies));
+            return SpeciesMapper.INSTANCE.toDTO(speciesRepository.save(newSpecies));
         else
             try {
                 throw new InstanceAlreadyExistsException(speciesDTO.getSpecies() + " species already exists!");
@@ -55,6 +54,6 @@ public class SpeciesService {
     }
 
     public SpeciesDTO getSpecies(Long id) {
-        return speciesMapper.toDTO(findById(id));
+        return SpeciesMapper.INSTANCE.toDTO(findById(id));
     }
 }

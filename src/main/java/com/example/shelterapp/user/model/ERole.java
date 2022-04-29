@@ -1,9 +1,10 @@
 package com.example.shelterapp.user.model;
 
 public enum ERole {
-    ADMINISTRATOR("administrator"),
-    USER("user"),
-    ONG("ong");
+
+    ADMINISTRATOR("ADMINISTRATOR"),
+    USER("USER"),
+    ONG("ONG");
 
     private final String name;
 

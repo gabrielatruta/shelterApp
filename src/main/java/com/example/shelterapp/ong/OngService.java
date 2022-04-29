@@ -16,12 +16,11 @@ import java.util.stream.Collectors;
 public class OngService {
 
     private final OngRepository ongRepository;
-    private final OngMapper ongMapper;
     private final AnimalRepository animalRepository;
 
     public List<OngDTO> findAll() {
         return ongRepository.findAll()
-                .stream().map(ongMapper::toDTO)
+                .stream().map(OngMapper.INSTANCE::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -31,16 +30,16 @@ public class OngService {
     }
 
     public OngDTO createOng(OngDTO ongDTO) {
-        Ong ong = ongMapper.fromDTO(ongDTO);
+        Ong ong = OngMapper.INSTANCE.fromDTO(ongDTO);
         ong.setAnimals(List.of());
-        return ongMapper.toDTO(ongRepository.save(ong));
+        return OngMapper.INSTANCE.toDTO(ongRepository.save(ong));
     }
 
     public OngDTO editOng(Long id, OngDTO ongDTO) {
-        Ong actOng = ongMapper.fromDTO(ongDTO);
+        Ong actOng = OngMapper.INSTANCE.fromDTO(ongDTO);
         List<Animal> allAnimalsFromONG = animalRepository.findAllAnimalsFromONG(id);
         actOng.setAnimals(allAnimalsFromONG);
-        return ongMapper.toDTO(ongRepository.save(actOng));
+        return OngMapper.INSTANCE.toDTO(ongRepository.save(actOng));
     }
 
     public void deleteById(Long id) {
@@ -52,7 +51,7 @@ public class OngService {
     }
 
     public OngDTO get(Long id) {
-        return ongMapper.toDTO(findById(id));
+        return OngMapper.INSTANCE.toDTO(findById(id));
     }
 
 }

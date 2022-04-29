@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.example.shelterapp.URLMapping.*;
+import static com.example.shelterapp.utils.URLMapping.*;
 
 @RestController
 @RequestMapping(USER)
