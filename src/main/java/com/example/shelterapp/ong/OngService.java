@@ -31,7 +31,6 @@ public class OngService {
 
     public OngDTO createOng(OngDTO ongDTO) {
         Ong ong = OngMapper.INSTANCE.fromDTO(ongDTO);
-        ong.setAnimals(List.of());
         return OngMapper.INSTANCE.toDTO(ongRepository.save(ong));
     }
 

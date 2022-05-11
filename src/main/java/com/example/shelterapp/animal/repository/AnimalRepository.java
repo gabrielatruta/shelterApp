@@ -23,7 +23,7 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     last vaccine, period for valid vax, what animals need new vaccines
      */
     @Query("SELECT a FROM Animal a WHERE a.description LIKE '?%1%'")
-    List<Animal> findAllAnimalsByKeyword(String s1);
+    List<Animal> findAllAnimalsByDescriptionKeyword(String s1);
 
     @Query("SELECT a FROM Animal a WHERE a.neutered <> TRUE")
     List<Animal> findAllAnimalsNotNeutered();

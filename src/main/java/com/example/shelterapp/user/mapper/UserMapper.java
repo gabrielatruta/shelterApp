@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 public interface UserMapper {
 
     UserDTO toDTO(User user);
+
+    @Mapping(target = "roles", ignore = true)
     User fromDTO(UserDTO userDTO);
 
     @Mappings({

@@ -3,30 +3,21 @@ package com.example.shelterapp.animal.repository;
 import com.example.shelterapp.animal.mapper.AnimalMapper;
 import com.example.shelterapp.animal.model.Animal;
 import com.example.shelterapp.animal.model.dto.AnimalDTO;
-import com.example.shelterapp.animal.model.enums.ESize;
-import com.example.shelterapp.animal.model.enums.ESpecies;
+import com.example.shelterapp.ong.OngMapper;
 import com.example.shelterapp.ong.OngRepository;
 import com.example.shelterapp.ong.model.Ong;
+import com.example.shelterapp.ong.model.dto.OngDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
-import javax.inject.Inject;
-
-import java.time.LocalDate;
-
-import static com.example.shelterapp.animal.model.enums.ESize.MEDIUM;
-import static com.example.shelterapp.animal.model.enums.ESpecies.DOG;
-import static java.lang.Boolean.TRUE;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
 @DirtiesContext
@@ -46,56 +37,39 @@ class AnimalRepositoryTest {
     public void beforeEach() {
         animalRepository.deleteAll();
         ongRepository.deleteAll();
-        Animal iris = animalRepository.save(Animal.builder()
-                .species(DOG)
-                .name("Iris")
-                .age(7F)
-                .birthday(LocalDate.now())
-                .gender("female")
-                .size(MEDIUM)
-                .neutered(TRUE)
-                .dateOfLastVaccine(LocalDate.now())
-                .picture("test")
-                .description("German shepard mixture, very smart")
-                .build());
 
-        Ong randomONG = ongRepository.save(Ong.builder()
-                .name("Test ONG")
-                .description("test")
-                .city("Zalau")
-                .phoneNumber("test")
-                .website("test")
-                .build());
-
-        randomONG.addAnimal(iris);
-        ongRepository.save(randomONG);
+        for (int i = 0; i < 100; i++) {
+            Ong ongInstance = OngMapper.INSTANCE.fromDTO(podamFactory.manufacturePojo(OngDTO.class));
+            Animal animalInstance = AnimalMapper.INSTANCE.fromDTO(podamFactory.manufacturePojo(AnimalDTO.class));
+            ongInstance.addAnimal(animalInstance);
+            ongRepository.save(ongInstance);
+        }
 
     }
 
 
     @Test
     void findAllAnimalsFromONG() {
-
-        Ong ong = ongRepository.findOngByName("Test ONG").get();
-        assertNotNull(animalRepository.findAllAnimalsFromONG(ong.getId()));
-
+        assertNotNull(animalRepository.findAllAnimalsFromONG(ongRepository.getOne(1L).getId()));
     }
 
     @Test
     void findAllAnimalsBelowAge() {
-        AnimalDTO animalDTO = podamFactory.manufacturePojo(AnimalDTO.class);
-        System.out.println("test: " + AnimalMapper.INSTANCE.fromDTO(animalDTO));
+        assertNotNull(animalRepository.findAllAnimalsBelowAge(3F));
     }
 
     @Test
     void findAllAnimalsByKeyword() {
+        assertNotNull(animalRepository.findAllAnimalsByDescriptionKeyword("as"));
     }
 
     @Test
     void findAllAnimalsNotNeutered() {
+        assertNotNull(animalRepository.findAllAnimalsNotNeutered());
     }
 
     @Test
     void findAnimalsByDescriptionContains() {
+        assertNotNull(animalRepository.findAnimalsByDescriptionContains("as"));
     }
 }

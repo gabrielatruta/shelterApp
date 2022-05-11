@@ -47,8 +47,10 @@ public class Ong {
     private List<Animal> animals = new ArrayList<>();
 
     public void addAnimal (Animal animal) {
-        animals.add(animal);
-        animal.setOng(this);
+        if (animal != null) {
+            animals.add(animal);
+            animal.setOng(this);
+        }
     }
 
     public void removeAnimal (Animal animal) {

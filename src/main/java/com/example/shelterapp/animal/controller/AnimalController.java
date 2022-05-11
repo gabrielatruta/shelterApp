@@ -3,6 +3,8 @@ package com.example.shelterapp.animal.controller;
 import com.example.shelterapp.animal.service.AnimalService;
 import com.example.shelterapp.animal.model.dto.AnimalDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,18 +15,19 @@ import static com.example.shelterapp.utils.URLMapping.ENTITY;
 @RestController
 @RequestMapping(ANIMAL)
 @RequiredArgsConstructor
+@CrossOrigin
 public class AnimalController {
 
     private final AnimalService animalService;
 
     @GetMapping
-    public List<AnimalDTO> allAnimals() {
-        return animalService.allAnimals();
+    public ResponseEntity<List<AnimalDTO>> allAnimals() {
+        return ResponseEntity.ok(animalService.allAnimals());
     }
 
     @PostMapping
-    public AnimalDTO createAnimal(@RequestBody AnimalDTO animalDTO) {
-        return animalService.createAnimal(animalDTO);
+    public ResponseEntity<AnimalDTO> createAnimal(@RequestBody AnimalDTO animalDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(animalService.createAnimal(animalDTO));
     }
 
     @DeleteMapping(ENTITY)
